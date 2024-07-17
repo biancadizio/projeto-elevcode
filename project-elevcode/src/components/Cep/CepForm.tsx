@@ -1,32 +1,86 @@
-// components/Cep/CepForm.tsx
-
 import { useState } from "react";
-import { fetchCepInfo } from "../../api/cep";
-
-interface Address {
-  cep: string;
-}
+import { Address } from "./types/address";
 
 const CepForm = () => {
-  const [cep, setCep] = useState<string>(""); // Tipagem explícita
-  const [address, setAddress] = useState<Address | null>(null); // Tipagem explícita para 'address'
-  const [error, setError] = useState<string>(""); // Tipagem explícita
+  const [cep, setCep] = useState<string>("");
+  const [address, setAddress] = useState<Address | null>(null);
+  const [error, setError] = useState<string>("");
 
-  const handleSearch = async () => {
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     try {
-      const data = await fetchCepInfo(cep);
-      setAddress(data);
-      setError("");
+      const response = await fetch("/api/cep", {
+        method: "POST",
+        body: JSON.stringify({ cep }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setAddress(data);
+        setError("");
+      } else {
+        throw new Error(data.message || "Failed to fetch CEP information.");
+      }
     } catch (error: any) {
-      setError(error.message || "Failed to fetch CEP information."); // Tratamento condicional para definir o erro
+      setError(error.message || "Failed to fetch CEP information.");
       setAddress(null);
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      {/* Formulário de busca de CEP aqui */}
-      <button onClick={handleSearch}>Buscar</button>
+      <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
+        <h2 className="mb-6 text-2xl font-bold text-center">Buscar CEP</h2>
+
+        {error && <p className="mb-4 text-red-500">{error}</p>}
+
+        <form onSubmit={handleSearch}>
+          <div className="mb-4">
+            <label
+              htmlFor="cep"
+              className="block mb-2 text-sm font-bold text-gray-700"
+            >
+              CEP
+            </label>
+            <input
+              type="text"
+              id="cep"
+              className="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:border-blue-500"
+              placeholder="Digite o CEP"
+              value={cep}
+              onChange={(e) => {
+                setCep(e.target.value);
+                if (error) setError("");
+              }}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+          >
+            Buscar
+          </button>
+        </form>
+
+        {address && (
+          <div className="mt-6">
+            <p>
+              <strong>CEP:</strong> {address.cep}
+            </p>
+            <div>
+              {" "}
+              <h3 className="text-xl font-bold">Endereço: </h3>
+              <p>{address.street}</p>
+              <p>{address.neighborhood}</p>
+              <p>{address.city}</p>
+              <p>{address.state}</p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

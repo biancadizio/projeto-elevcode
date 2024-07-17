@@ -1,5 +1,3 @@
-// api/cep.ts
-
 export const fetchCepInfo = async (cep: string) => {
     try {
       const response = await fetch(`https://brasilaberto.com/api/cep/v1/${cep}`, {

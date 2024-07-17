@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 
 const LoginForm = () => {
   const [email, setEmail] = useState<string>("john@mail.com");
@@ -12,49 +11,49 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      });
 
-        const response = await fetch( "/api/login", {method: "POST", body: JSON.stringify({email, password}) })
+      const data = await response.json();
 
-    const data = await response.json()
+      if (data) {
+        localStorage.setItem("token", data);
+        return router.push("/cep");
+      }
 
-    if(data) {
-      localStorage.setItem("token", data)
-      
-        return router.push("/cep")
-    } 
-
-    throw new Error("Authentication failed. Please check your credentials.");
-
-        }  catch(error) {
-            setError("Authentication failed. Please check your credentials.");
-        }
+      throw new Error("Authentication failed. Please check your credentials.");
+    } catch (error) {
+      setError("Authentication failed. Please check your credentials.");
     }
+  };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
-        <h2 className="mb-6 text-2xl font-bold text-center">Login</h2>
+    <div className="flex items-center justify-center min-h-screen bg-background">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+        <h2 className="mb-6 text-2xl font-bold text-center text-primary">Login</h2>
 
-        {error && <p className="mb-4 text-red-500">{error}</p>}
+        {error && <p className="mb-4 text-red-500 text-center">{error}</p>}
 
-        <form onSubmit={handleLogin}>
-          <div className="mb-4">
-            <label htmlFor="email" className="block mb-2 text-sm font-bold text-gray-700">Email</label>
+        <form onSubmit={handleLogin} className="space-y-6">
+          <div>
+            <label htmlFor="email" className="block mb-2 text-sm font-bold text-secondary">Email</label>
             <input
               type="email"
               id="email"
-              className="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:border-primary"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
-          <div className="mb-6">
-            <label htmlFor="password" className="block mb-2 text-sm font-bold text-gray-700">Password</label>
+          <div>
+            <label htmlFor="password" className="block mb-2 text-sm font-bold text-secondary">Password</label>
             <input
               type="password"
               id="password"
-              className="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:border-primary"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -62,7 +61,7 @@ const LoginForm = () => {
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+            className="w-full px-4 py-2 font-bold text-white bg-primary rounded hover:bg-accent"
           >
             Entrar
           </button>
@@ -73,18 +72,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

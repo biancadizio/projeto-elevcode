@@ -1,5 +1,3 @@
-// api/auth.ts
-
 export const login = async (email: string, password: string) => {
   try {
     const response = await fetch("https://api.escuelajs.co/api/v1/auth/login", {
@@ -9,9 +7,6 @@ export const login = async (email: string, password: string) => {
       },
       body: JSON.stringify({ email, password }),
     });
-console.log(response, "bbbbbbbbbbbbbbbbbbbbbbbbbbb")
-console.log(email, password)
-
 
     const data = await response.json();
     return data.access_token;
