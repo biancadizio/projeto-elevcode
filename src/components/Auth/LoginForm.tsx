@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState<string>("john@mail.com");
-  const [password, setPassword] = useState<string>("changeme");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const router = useRouter();
 
@@ -53,7 +53,7 @@ const LoginForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="Insira o email cadastrado"
+              placeholder="Insira o email"
             />
           </div>
           <div>
@@ -70,6 +70,7 @@ const LoginForm = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              placeholder="Senha"
             />
           </div>
           <button

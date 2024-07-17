@@ -1,5 +1,3 @@
-// pages/cep.tsx
-
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import CepForm from "../components/Cep/CepForm";
