@@ -31,29 +31,42 @@ const LoginForm = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md ">
-        <h2 className="mb-6 text-2xl font-bold text-center text-primary">Login</h2>
+      <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg">
+        <h2 className="mb-6 text-3xl font-bold text-center text-blue-950">
+          Login
+        </h2>
 
         {error && <p className="mb-4 text-red-500 text-center">{error}</p>}
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block mb-2 text-sm font-bold text-gray-700">Email</label>
+            <label
+              htmlFor="email"
+              className="block mb-1 text-lg font-semibold text-gray-900"
+            >
+              Email
+            </label>
             <input
               type="email"
               id="email"
-              className="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:border-primary"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-900"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              placeholder="Insira o email cadastrado"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block mb-2 text-sm font-bold text-gray-700">Password</label>
+            <label
+              htmlFor="password"
+              className="block mb-1 text-lg font-semibold text-gray-900"
+            >
+              Password
+            </label>
             <input
               type="password"
               id="password"
-              className="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:border-primary"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-900"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -61,7 +74,7 @@ const LoginForm = () => {
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 font-bold text-white rounded bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 font-bold text-white bg-blue-800 rounded-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             Entrar
           </button>

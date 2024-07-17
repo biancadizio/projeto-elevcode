@@ -32,7 +32,7 @@ const CepForm = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
-        <h2 className="mb-6 text-2xl font-bold text-center">Buscar CEP</h2>
+        <h2 className="mb-6 text-2xl font-bold text-center text-blue-950">Buscar CEP</h2>
 
         {error && <p className="mb-4 text-red-500">{error}</p>}
 
@@ -53,7 +53,7 @@ const CepForm = () => {
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+            className="w-full px-4 py-2 font-bold text-white bg-blue-800 rounded-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             Buscar
           </button>
