@@ -38,23 +38,17 @@ const CepForm = () => {
 
         <form onSubmit={handleSearch}>
           <div className="mb-4">
-            <label
-              htmlFor="cep"
-              className="block mb-2 text-sm font-bold text-gray-700"
-            >
-              CEP
-            </label>
             <input
-              type="text"
               id="cep"
+              required
+              type="text"
+              value={cep}
               className="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:border-blue-500"
               placeholder="Digite o CEP"
-              value={cep}
               onChange={(e) => {
                 setCep(e.target.value);
                 if (error) setError("");
               }}
-              required
             />
           </div>
           <button
@@ -71,12 +65,11 @@ const CepForm = () => {
               <strong>CEP:</strong> {address.cep}
             </p>
             <div>
-              {" "}
-              <h3 className="text-xl font-bold">Endereço: </h3>
+              <h3 className="font-bold">Endereço: </h3>
               <p>{address.street}</p>
-              <p>{address.neighborhood}</p>
-              <p>{address.city}</p>
-              <p>{address.state}</p>
+              <p><strong>Bairro: </strong>{address.neighborhood}</p>
+              <p><strong>Cidade: </strong>{address.city} / {address.state}</p>
+
             </div>
           </div>
         )}
