@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState<string>("platzi@example.com");
-  const [password, setPassword] = useState<string>("platzi123");
+  const [email, setEmail] = useState<string>("john@mail.com");
+  const [password, setPassword] = useState<string>("changeme");
   const [error, setError] = useState<string>("");
   const router = useRouter();
 
@@ -11,44 +12,23 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://fakeapi.platzi.com/en/gql/auth-jwt/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: `
-            mutation {
-              login(email: "${email}", password: "${password}") {
-                access_token
-                refresh_token
-              }
-            }
-          `
-        }),
-      });
 
-      const data = await response.json();
+        const response = await fetch( "/api/login", {method: "POST", body: JSON.stringify({email, password}) })
 
-      if (data.errors) {
-        setError('Erro ao fazer login. Verifique suas credenciais.');
-      } else {
-        const accessToken = data.data.login.access_token;
-        const refreshToken = data.data.login.refresh_token;
+    const data = await response.json()
 
-        // Armazena os tokens em localStorage
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
+    if(data) {
+      localStorage.setItem("token", data)
+      
+        return router.push("/cep")
+    } 
 
-        setError(''); // Limpa qualquer erro anterior
-        router.push("/cep"); // Redireciona para a página de CEP após o login
-      }
+    throw new Error("Authentication failed. Please check your credentials.");
 
-    } catch (error) {
-      console.error('Erro:', error);
-      setError('Erro ao fazer login. Por favor, tente novamente.');
+        }  catch(error) {
+            setError("Authentication failed. Please check your credentials.");
+        }
     }
-  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

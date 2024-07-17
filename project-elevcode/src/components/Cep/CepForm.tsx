@@ -4,8 +4,7 @@ import { useState } from "react";
 import { fetchCepInfo } from "../../api/cep";
 
 interface Address {
-  // Defina a estrutura de dados esperada para o endereço
-  // Exemplo: rua, bairro, cidade, estado, etc.
+  cep: string;
 }
 
 const CepForm = () => {
@@ -27,6 +26,7 @@ const CepForm = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       {/* Formulário de busca de CEP aqui */}
+      <button onClick={handleSearch}>Buscar</button>
     </div>
   );
 };

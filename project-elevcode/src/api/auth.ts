@@ -2,17 +2,16 @@
 
 export const login = async (email: string, password: string) => {
   try {
-    const response = await fetch("https://fakeapi.platzi.com/en/rest/auth-jwt/", {
+    const response = await fetch("https://api.escuelajs.co/api/v1/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
     });
+console.log(response, "bbbbbbbbbbbbbbbbbbbbbbbbbbb")
+console.log(email, password)
 
-    if (!response.ok) {
-      throw new Error("Login failed");
-    }
 
     const data = await response.json();
     return data.access_token;

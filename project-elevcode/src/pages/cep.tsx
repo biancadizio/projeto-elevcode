@@ -4,6 +4,11 @@ import { useState, useEffect } from "react";
 import CepForm from "../components/Cep/CepForm"; // Importando o novo componente CepForm
 import { useRouter } from "next/router";
 
+export const getServerSideProps = (async () => {
+
+  return { props: {  } }
+}) 
+
 const CepPage = () => {
   const [cep, setCep] = useState("");
   const [address, setAddress] = useState<any>(null);
